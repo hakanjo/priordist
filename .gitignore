@@ -1,5 +1,6 @@
 # Temporary dev files
 old_priordist/
+old_tune_model/
 
 # Generated files
 .Rproj.user

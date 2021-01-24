@@ -2,10 +2,10 @@
 % Please edit documentation in R/app.R
 \name{launch_priordist}
 \alias{launch_priordist}
-\title{Run the priordist application}
+\title{Launch priordist}
 \usage{
 launch_priordist()
 }
 \description{
-Run the priordist application
+Run the priordist application.
 }

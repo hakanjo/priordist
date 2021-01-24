@@ -2,13 +2,11 @@
 % Please edit documentation in R/theme.R
 \name{theme_set_priordist}
 \alias{theme_set_priordist}
-\title{Plot theme
-ggplot2 theme for priordist.}
+\title{Plot theme}
 \usage{
 theme_set_priordist()
 }
 \description{
-Plot theme
 ggplot2 theme for priordist.
 }
 \keyword{internal}

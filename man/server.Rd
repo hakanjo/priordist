@@ -2,21 +2,21 @@
 % Please edit documentation in R/server.R
 \name{server}
 \alias{server}
-\title{Server logic for priordist
-Define the priordist server logic.}
+\title{Server logic for priordist}
 \usage{
 server(input, output, session)
 }
 \arguments{
-\item{input}{provided by shiny}
+\item{input}{Provided by shiny.}
 
-\item{output}{provided by shiny}
+\item{output}{Provided by shiny.}
+
+\item{session}{Provided by shiny.}
 }
 \value{
 Shiny server logic.
 }
 \description{
-Server logic for priordist
 Define the priordist server logic.
 }
 \keyword{internal}

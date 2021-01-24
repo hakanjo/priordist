@@ -9,10 +9,9 @@
 #'
 ui <- fluidPage(
   titlePanel("priordist"),
-
   sidebarLayout(
     sidebarPanel(
-      # What type of data?
+      # What type of distribution?
       selectInput(
         inputId = "dist_type", label = "Distribution category",
         choices = list(
@@ -26,59 +25,54 @@ ui <- fluidPage(
         ),
         selected = "univariate_discrete"
       ),
-      # What values can the data take?
-      # selectInput(
-      #   inputId = "support", label = "Support",
-      #   choices = list(
-      #     "Natural numbers (ℕ₀)" = "natural"
-      #   ),
-      #   selected = "natural"
-      # ),
-
-      # Which constraints do you want to use?
-      checkboxGroupInput(
-        inputId = "constraints", label = "Constraints",
-        choices = list(
-          "Pr(X < x)" = "lower",
-          "Pr(X < x)" = "upper"
-        ),
-        selected = "upper"
+      # What distribution?
+      conditionalPanel(
+        condition = "input.dist_type == 'univariate_discrete'",
+        selectInput(
+          inputId = "dist", label = "Distribution",
+          choices = list(
+            "Poisson" = "poisson"
+          ),
+          selected = "poisson"
+        )
       ),
       # What are the constraints?
-      conditionalPanel(
-        condition = "input.constraints.includes('lower')",
-        numericInput(
-          inputId = "lower_value", label = "Lower value", value = 0
+      selectInput(
+        inputId = "constraints", label = "Constraints",
+        choices = list(
+          "Mean" = "mean",
+          "Pr(x ≤ X)" = "leq"
         ),
+        selected = "mean"
       ),
       conditionalPanel(
-        condition = "input.constraints.includes('lower')",
-        sliderInput(
-          inputId = "lower_prob", label = "Pr(X < lower value)",
-          min = 0, max = 1, step = 0.005, value = 0.025
+        condition = "input.constraints.includes('mean')",
+        numericInput(
+          inputId = "mean", label = "Mean", value = 5
         )
       ),
       conditionalPanel(
-        condition = "input.constraints.includes('upper')",
+        condition = "input.constraints.includes('leq')",
         numericInput(
-          inputId = "upper_value", label = "Upper value", value = 10
+          inputId = "X", label = "X", value = 5
         ),
-      ),
-      conditionalPanel(
-        condition = "input.constraints.includes('upper')",
         sliderInput(
-          inputId = "upper_prob", label = "Pr(X < upper value)",
-          min = 0, max = 1, step = 0.005, value = 0.975
+          inputId = "pr_leq", label = "Pr(x ≤ X)", min = 0, max = 1,
+          step = 0.005, value = 0.975
         )
       ),
-      # conditionalPanel(
-      #   condition = "input.constraints.includes('mode')",
-      #   numericInput(inputId = "mode", label = "Mode", value = 10)
-      # ),
-
       # Plot settings
-      numericInput(inputId = "xseq_min", label = "Plot minimum x", value = 0),
-      numericInput(inputId = "xseq_max", label = "Plot maximum x", value = 10)
+      numericInput(inputId = "xseq_min", label = "x-axis minimum", value = 0),
+      numericInput(inputId = "xseq_max", label = "x-axis maximum", value = 10),
+      # Newton solver options
+      numericInput(inputId = "guess", label = "Guess", value = 1),
+      helpText("Initial guess for a solution to f(x) = 0."),
+      numericInput(inputId = "epsilon", label = "ε", value = 1e-8, step = 0.01),
+      helpText("Stopping criteria is abs(f(x)) < ε."),
+      numericInput(
+        inputId = "max_iter", label = "Maximum number of iterations", min = 1,
+        value = 1000
+      )
     ),
     mainPanel(
       div(htmlOutput(outputId = "dist_description"), style = "font-size:150%"),
