@@ -41,7 +41,7 @@ ui <- fluidPage(
         inputId = "constraints", label = "Constraints",
         choices = list(
           "Mean" = "mean",
-          "Pr(x ≤ X)" = "leq"
+          "Pr(x \U2264 X)" = "leq"
         ),
         selected = "mean"
       ),
@@ -57,7 +57,7 @@ ui <- fluidPage(
           inputId = "X", label = "X", value = 5
         ),
         sliderInput(
-          inputId = "pr_leq", label = "Pr(x ≤ X)", min = 0, max = 1,
+          inputId = "pr_leq", label = "Pr(x \U2264 X)", min = 0, max = 1,
           step = 0.005, value = 0.975
         )
       ),
@@ -67,8 +67,8 @@ ui <- fluidPage(
       # Newton solver options
       numericInput(inputId = "guess", label = "Guess", value = 1),
       helpText("Initial guess for a solution to f(x) = 0."),
-      numericInput(inputId = "epsilon", label = "ε", value = 1e-8, step = 0.01),
-      helpText("Stopping criteria is abs(f(x)) < ε."),
+      numericInput(inputId = "epsilon", label = "\U03B5", value = 1e-8, step = 0.01),
+      helpText("Stopping criteria is abs(f(x)) < \U03B5."),
       numericInput(
         inputId = "max_iter", label = "Maximum number of iterations", min = 1,
         value = 1000

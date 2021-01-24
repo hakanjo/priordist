@@ -4,6 +4,8 @@
 #'
 #' @param constraints List of constraints.
 #' @return A distribution object.
+#' @import methods
+#' @import stats
 #' @keywords internal
 #'
 pick_parameters <- function(distribution, constraints, guess, epsilon, max_iter) {

@@ -18,4 +18,7 @@ Suggests:
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 Imports: 
-    shiny
+    ggplot2 (>= 3.3.3),
+    methods (>= 4.0.3),
+    shiny (>= 1.5.0),
+    tidyr (>= 1.1.2)
