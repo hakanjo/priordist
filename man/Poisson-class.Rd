@@ -5,14 +5,8 @@
 \alias{Poisson-class}
 \alias{Poisson}
 \title{Constraint-based Poisson distribution}
-\arguments{
-\item{constraints}{List of constraints.}
-}
-\value{
-Parameters for a Poisson distribution.
-}
 \description{
-Find suitable parameters for a Poisson distributions given constraints.
+A distribution class pairing a description in model syntax and a ggplot2 function.
 }
 
 \keyword{internal}

@@ -1,9 +1,7 @@
 #' Constraint-based Poisson distribution
 #'
-#' Find suitable parameters for a Poisson distributions given constraints.
+#' A distribution class pairing a description in model syntax and a ggplot2 function.
 #'
-#' @param constraints List of constraints.
-#' @return Parameters for a Poisson distribution.
 #' @import tidyr
 #' @import ggplot2
 #' @keywords internal
