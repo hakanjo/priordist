@@ -6,8 +6,8 @@
 #' @param output Provided by shiny.
 #' @param session Provided by shiny.
 #' @return Shiny server logic.
-#' @import tidyr
 #' @import ggplot2
+#' @import tidyr
 #' @import shiny
 #' @keywords internal
 #'
@@ -16,25 +16,43 @@ server <- function(input, output, session) {
 
   constraints <- reactive({
     if (input$constraints == "mean") {
-      constraints <- list(
+      list(
         mean = input$mean
       )
-      return(constraints)
     } else if (input$constraints == "leq") {
-      constraints <- list(
+      list(
         X = input$X,
         pr_leq = input$pr_leq
       )
-      return(constraints)
+    } else if (input$constraints == "a_x_b") {
+      list(
+        a = input$a,
+        b = input$b,
+        pr_leq_a = input$pr_leq_a,
+        pr_leq_b = input$pr_leq_b
+      )
     } else {
       stop("No valid constraint selected.")
     }
   })
 
+  guess <- reactive({
+    if (input$dist == "poisson") {
+      list(
+        lambda = input$guess_lambda
+      )
+    } else if (input$dist == "normal") {
+      list(
+        mu = input$guess_mu,
+        sigma = input$guess_sigma
+      )
+    }
+  })
+
   distribution <- reactive({
     pick_parameters(
-      distribution = input$dist, constraints = constraints(), input$guess,
-      input$epsilon, input$max_iter
+      distribution = input$dist, constraints = constraints(), guess = guess(),
+      input$max_iter
     )
   })
 

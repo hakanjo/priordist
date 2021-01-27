@@ -3,33 +3,36 @@
 #' Pick a distribution based on a list of constraints.
 #'
 #' @param f Function for which we are searching for a solution f(x) = 0.
-#' @param Df Derivative of f(x).
 #' @param guess Initial guess for a solution f(x) = 0.
-#' @param epsilon Stopping criteria is abs(f(x)) < epsilon.
-#' @param max_iter Maximum number of iterations of Newton's method.
-#' @return If abs(f(xn)) < epsilon, returns xn or if Df(xn) == 0 or the number of iterations exceeds max_iter, returns NA.
+#' @param iter Iterations.
+#' @return The estimated root of the equations.
 #' @keywords internal
 #'
-newton <- function(f, Df, guess, epsilon = 1e-8, max_iter = 1000) {
+newton <- function(f, guess, iter = 1000) {
+  N <- length(guess)
   xn <- guess
-  for (n in 0:max_iter) {
-    # fxn = f(xn)
-    fxn <- f(xn)
-    if (is.nan(fxn)) {
-      warning("NaNs produced")
-      return(NA)
+
+  for (n in 1:iter) {
+    fxn <- do.call(f, xn)
+
+    if (any(is.na(fxn))) {
+      stop("newton: NaNs produced")
     }
-    if (abs(fxn) < epsilon) {
-      return(xn)
+
+    jacobian <- matrix(0, nrow = N, ncol = N)
+    delta <- pmax(abs(unlist(xn)) * 1e-8, 1e-8)
+
+    for (j in 1:N) {
+      d <- rep(0, N)
+      d[j] <- delta[j]
+      xnp1 <- Map("+", xn, d)
+      fxnp1 <- do.call(f, xnp1)
+      jacobian[, j] <- unlist(Map("/", Map("-", fxnp1, fxn), delta[j]))
     }
-    # Dfxn = Df(xn)
-    Dfxn <- Df(xn)
-    if (Dfxn == 0) {
-      warning("f'(x) == 0")
-      return(NA)
-    }
-    xn <- xn - fxn / Dfxn
+
+    relchange <- solve(jacobian, -1 * unlist(fxn))
+    xn <- Map("+", xn, relchange)
   }
-  warning("Maximum number of iterations exceeded")
-  return(NA)
+
+  return(xn)
 }

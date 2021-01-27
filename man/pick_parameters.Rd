@@ -4,7 +4,7 @@
 \alias{pick_parameters}
 \title{Pick parameters}
 \usage{
-pick_parameters(distribution, constraints, guess, epsilon, max_iter)
+pick_parameters(distribution, constraints, guess, iter = 1000)
 }
 \arguments{
 \item{constraints}{List of constraints.}
